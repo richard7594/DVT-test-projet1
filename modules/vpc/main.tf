@@ -1,12 +1,12 @@
 
 
-# installer un loadbalancer , et dns name au lieu de eip
+# installer un loadbalancer , et dns Name au lieu de eip
 
 resource "aws_vpc" "prod" {
     
     cidr_block = var.vpc_cidr
     tags = {
-        name = "projet1"
+        Name = "projet1"
     }   
 } 
 
@@ -14,7 +14,7 @@ resource "aws_subnet" "public" {
   vpc_id = aws_vpc.prod.id
   cidr_block = var.public_cidr
 
-   tags = { name = "public_subnet"}
+   tags = { Name = "public_subnet"}
 }
 
 
@@ -24,7 +24,7 @@ resource "aws_subnet" "private" {
   vpc_id = aws_vpc.prod.id
   cidr_block = var.private_cidr
 
-  tags = { name = "private_subnet"}
+  tags = { Name = "private_subnet"}
   
 }
 
@@ -32,35 +32,35 @@ resource "aws_subnet" "private" {
 resource "aws_internet_gateway" "igw" {
    
     vpc_id = aws_vpc.prod.id
-    tags = { name = "igw"}
+    tags = { Name = "igw"}
   
 }
 
-resource "aws_internet_gateway_attachment" "igw" { 
+# resource "aws_internet_gateway_attachment" "igw" { 
 
-    vpc_id = aws_vpc.prod.id
-    internet_gateway_id = aws_internet_gateway.igw.id
-}
+#     vpc_id = aws_vpc.prod.id
+#     internet_gateway_id = aws_internet_gateway.igw.id
+# }
 
 resource "aws_route_table" "rt" {
   
   vpc_id = aws_vpc.prod.id
 
-  route = {
+  route {
   
-  cidr_block = "0.0.0.0/0"
-  internet_gateway_id = aws_internet_gateway.id
+      cidr_block = "0.0.0.0/0"
+      gateway_id = aws_internet_gateway.igw.id
            
   }
 
 
-  tags = { name = "route table p1"}
+  tags = { Name = "route table p1"}
 }
 
-resource "aws_route_table_association" "name" {
+resource "aws_route_table_association" "Name" {
 
     route_table_id = aws_route_table.rt.id
-    subnet_id = aws_subnet.public
+    subnet_id = aws_subnet.public.id
   
 }
 
@@ -84,14 +84,14 @@ ingress {
   from_port = -1
   to_port = -1
   cidr_blocks = ["0.0.0.0/0"]
-  protocol = "imcp"
+  protocol = "icmp"
 
 }
 
 egress {
 
-  from_port = -1
-  to_port = -1
+  from_port = 0
+  to_port = 0
   protocol = -1
   cidr_blocks =  ["0.0.0.0/0"]
 
