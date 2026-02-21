@@ -1,10 +1,10 @@
-resource "aws_key_pair" "key" {
+# resource "aws_key_pair" "key" {
 
-    key_name = "richou"
-    public_key = file("~/.ssh/id_rsa.pub")
+#     key_name = "richou"
+#     public_key = file("~/.ssh/id_rsa.pub")
 
   
-}
+# }
 
 resource "aws_iam_role" "ec2_role" {
 
@@ -70,8 +70,8 @@ resource "aws_instance" "instance" {
 
  ami = var.ami
  instance_type = var.type
- key_name = aws_key_pair.key.key_name
-#  key_name = "richou"
+#  key_name = aws_key_pair.key.key_name
+ key_name = "richou"
  vpc_security_group_ids = [var.sg_id]  
  subnet_id = var.public_subnet
  

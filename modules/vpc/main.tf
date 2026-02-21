@@ -17,12 +17,21 @@ resource "aws_subnet" "public" {
    tags = { Name = "public_subnet"}
 }
 
+resource "aws_subnet" "public2" {
+  vpc_id = aws_vpc.prod.id
+  cidr_block = var.public_cidr2
+  availability_zone = "eu-west-1b"
+
+   tags = { Name = "public_subnet2"}
+}
+
 
 # not still use 
 
 resource "aws_subnet" "private" {
   vpc_id = aws_vpc.prod.id
   cidr_block = var.private_cidr
+ 
 
   tags = { Name = "private_subnet"}
   
@@ -64,6 +73,12 @@ resource "aws_route_table_association" "Name" {
   
 }
 
+resource "aws_route_table_association" "Name1" {
+
+    route_table_id = aws_route_table.rt.id
+    subnet_id = aws_subnet.public2.id
+  
+}
 
 resource "aws_security_group" "sg" {
   
@@ -75,6 +90,16 @@ ingress {
   to_port = 22
   cidr_blocks = ["0.0.0.0/0"]
   protocol = "tcp"
+
+}
+
+ingress {
+
+  from_port = 80
+  to_port = 80
+  cidr_blocks = ["0.0.0.0/0"]
+  protocol = "tcp"
+  
 
 }
 
@@ -98,5 +123,9 @@ egress {
 
 }
   
+
+  tags = {
+    Name = "Richou-sg"
+  }
 }
  
