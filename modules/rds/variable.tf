@@ -1,10 +1,3 @@
-variable "region" {
-  default = "eu-west-1"
-}
-variable "runtime" {
-  type = string
-}
-
 variable "db_type" {
   type = string
 }
@@ -12,6 +5,7 @@ variable "db_type" {
 variable "engine" {
   type = string
 }
+
 
 variable "username" {
   type = string

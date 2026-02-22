@@ -22,7 +22,6 @@ module "ec2" {
 module "lambda" {
 
   source = "./modules/lambda"
-
-
-
+  run_time = var.runtime
+  
 }
