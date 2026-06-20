@@ -14,6 +14,7 @@ resource "aws_lambda_function" "lambda" {
   runtime       = var.runtime
   handler       = "lambda.lambda_handler"
   filename      = data.archive_file.arch.output_path
+  code_sha256   = data.archive_file.arch.output_path
   environment {
     variables = {
       Name = "${data.aws_dynamodb_table.table.name}"
