@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     print(f"{event} \n")
     try:
       
-      get_item(event) 
+      return get_item(event) 
        
     except Exception as e:
         print("ERROR:", str(e))
@@ -21,14 +21,20 @@ def lambda_handler(event, context):
 def get_item (event): 
 
     queryString = event.get('queryStringParameters', '')  
-    id = queryString.get('id', 1)
+    id = str(queryString.get('id', 1))
+    tournoir = str(queryString.get('tournoir', ''))
 
     response = dynamodb.get_item(
-         TableName= table_name,
-         Key={ 'id' : id }
+         TableName = table_name,
+         Key={ 'Id':{ 'N': id },
+               'tournoir':{ 'S': tournoir }
+             }
     )
 
     return {
         "statusCode": 200,
         "body": json.dumps(response)
     }
+
+def put_item(event):
+    return
