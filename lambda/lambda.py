@@ -8,26 +8,27 @@ table_name = os.getenv("Name")
 def lambda_handler(event, context):
     print(f"{event} \n")
     try:
+      
+      get_item(event) 
        
-        id = event.get('id', 1)      
-           
-        table = dynamodb.Table(table_name)
-        response = table.get_item(
-            Key={
-                "Id": id
-            }
-        )
-
-        item = response.get("Item", {})
-
-        return {
-            "statusCode": 200,
-            "body": json.dumps(item)
-        }
-
     except Exception as e:
         print("ERROR:", str(e))
         return {
             "statusCode": 500,
             "body": "error"
         }
+    
+def get_item (event): 
+
+    queryString = event.get('queryStringParameters', '')  
+    id = queryString.get('id', 1)
+
+    response = dynamodb.get_item(
+         TableName= table_name,
+         key={ 'id' : id }
+    )
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(response)
+    }
