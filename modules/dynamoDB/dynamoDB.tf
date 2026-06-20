@@ -1,3 +1,12 @@
+locals {
+  items_to_insert = {
+    "item1" = { Id = "1", tournoir = "world_cup", Nom = "richou",   Prenom = "varice" }
+    "item2" = { Id = "2", tournoir = "world_cup", Nom = "richard", Prenom = "varice" }
+    "item3" = { Id = "1", tournoir = "LDC",       Nom = "richou",   Prenom = "varice" }
+  }
+}
+
+
 resource "aws_dynamodb_table" "dynamodb-table" {
   name           = "Note"
   billing_mode   = "PAY_PER_REQUEST"
@@ -26,28 +35,17 @@ resource "aws_dynamodb_table" "dynamodb-table" {
 }
 
 resource "aws_dynamodb_table_item" "example" {
+  for_each = local.items_to_insert
+
   table_name = aws_dynamodb_table.dynamodb-table.name
   hash_key   = aws_dynamodb_table.dynamodb-table.hash_key
-  range_key = aws_dynamodb_table.dynamodb-table.range_key
+  range_key  = aws_dynamodb_table.dynamodb-table.range_key
 
-  item = <<ITEM
-{
-  "Id": {"N": "1"},
-  "tournoir": {"S": "world_cup"},
-  "Nom": {"S": "richou"},
-  "Prenom": {"S": "varice"},
-},
-{
-"Id": {"N": "2"},
-  "tournoir": {"S": "world_cup"},
-  "Nom": {"S": "richard"},
-  "Prenom": {"S": "varice"},
-},
-{
-"Id": {"N": "1"},
-  "tournoir": {"S": "LDC"},
-  "Nom": {"S": "richou"},
-  "Prenom": {"S": "varice"},
-}
-ITEM
+  # jsonencode formate automatiquement les types DynamoDB (S, N, etc.) en JSON valide
+  item = jsonencode({
+    "Id"       = { "N" = each.value.Id }
+    "tournoir" = { "S" = each.value.tournoir }
+    "Nom"      = { "S" = each.value.Nom }
+    "Prenom"   = { "S" = each.value.Prenom }
+  })
 }
