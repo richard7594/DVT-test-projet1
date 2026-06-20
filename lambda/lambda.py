@@ -25,7 +25,7 @@ def get_item (event):
 
     response = dynamodb.get_item(
          TableName= table_name,
-         key={ 'id' : id }
+         Key={ 'id' : id }
     )
 
     return {
