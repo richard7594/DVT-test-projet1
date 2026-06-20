@@ -14,6 +14,7 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   range_key    = "tournoir"
 
 
+
   attribute {
     name = "Id"
     type = "N"
@@ -24,14 +25,6 @@ resource "aws_dynamodb_table" "dynamodb-table" {
     type = "S"
   }
 
-  attribute {
-    name = "Nom"
-    type = "S"
-  }
-  attribute {
-    name = "Prenom"
-    type = "S"
-  }
 }
 
 resource "aws_dynamodb_table_item" "example" {
