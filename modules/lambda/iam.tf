@@ -1,7 +1,6 @@
 data "aws_iam_policy_document" "role" {
 
     statement {
-      
       actions = ["sts:AssumeRole"]
       principals {
         type = "Service"
@@ -13,7 +12,6 @@ data "aws_iam_policy_document" "role" {
 }
 
 data "aws_iam_policy_document" "dynamo_db_po"{
-
    statement {
       
       effect = "Allow"
@@ -21,29 +19,22 @@ data "aws_iam_policy_document" "dynamo_db_po"{
       resources = [ "*" ]
       
    }
-
-}
-
-resource "aws_iam_policy" "rds_lamda" {
-  policy = data.aws_iam_policy_document.dynamo_db_po.json
-  
 }
 
 
 resource "aws_iam_role" "lambda_role" {
- name = "lambda"
+ name = "lambda_role"
  assume_role_policy = data.aws_iam_policy_document.role.json   
   
 }
 
-resource "aws_iam_role_policy_attachment" "pa" {
-
+resource "aws_iam_role_policy_attachment" "lambda_execution_role_permission" {
   role =  aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
  
 }
-resource "aws_iam_role_policy_attachment" "p_rds" {
-    policy_arn = aws_iam_policy.rds_lamda.arn
-     role =  aws_iam_role.lambda_role.name
+resource "aws_iam_role_policy" "dynamo_db_permission" {
+  role =  aws_iam_role.lambda_role.name 
+  policy = data.aws_iam_policy_document.dynamo_db_po.json  
 }
 

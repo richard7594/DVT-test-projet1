@@ -1,32 +1,24 @@
-
-
-
 data "archive_file" "arch" {
   type = "zip"
-  source_file = "${path.root}/lambda.py"
-  output_path = "${path.root}/lambda.zip"
+  source_file = "${path.root}/lambda/lambda.py"
+  output_path = "${path.root}/lambda/lambda.zip"
 
+}
+data "aws_dynamodb_table" "table" {
+  name = "Note"
 }
 
 resource "aws_lambda_function" "lambda" {
-    function_name = "richou"
+    function_name = "note"
     role = aws_iam_role.lambda_role.arn
     runtime = var.run_time
     handler = "lambda.lambda_handler"
     filename = data.archive_file.arch.output_path
- 
   environment {
-    
      variables = {     
-      Name="Note"
+      Name="${data.aws_dynamodb_table.table.name}"
      }
   }
 }
 
-resource "aws_lambda_permission" "apigw" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-}
 

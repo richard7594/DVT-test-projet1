@@ -2,16 +2,19 @@ import boto3
 import os
 import json
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.client('dynamodb')
 table_name = os.getenv("Name")
 
 def lambda_handler(event, context):
+    print(f"{event} \n")
     try:
+       
+        id = event.get('id', 1)      
+           
         table = dynamodb.Table(table_name)
-
         response = table.get_item(
             Key={
-                "nb": "1"
+                "Id": id
             }
         )
 
@@ -26,5 +29,5 @@ def lambda_handler(event, context):
         print("ERROR:", str(e))
         return {
             "statusCode": 500,
-            "body": "error richou"
+            "body": "error"
         }
