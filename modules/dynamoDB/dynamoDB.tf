@@ -36,13 +36,13 @@ resource "aws_dynamodb_table_item" "example" {
   "tournoir": {"S": "world_cup"},
   "Nom": {"S": "richou"},
   "Prenom": {"S": "varice"},
-}
+},
 {
 "Id": {"N": "2"},
   "tournoir": {"S": "world_cup"},
   "Nom": {"S": "richard"},
   "Prenom": {"S": "varice"},
-}
+},
 {
 "Id": {"N": "1"},
   "tournoir": {"S": "LDC"},
