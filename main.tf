@@ -5,7 +5,7 @@ module "dynamoDB" {
 
 module "lambda" {
   source = "./modules/lambda"
-  run_time = var.runtime  
+  runtime = var.runtime  
   depends_on = [ module.dynamoDB ]
 }
 

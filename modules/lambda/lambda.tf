@@ -11,7 +11,7 @@ data "aws_dynamodb_table" "table" {
 resource "aws_lambda_function" "lambda" {
     function_name = "note"
     role = aws_iam_role.lambda_role.arn
-    runtime = var.run_time
+    runtime = var.runtime
     handler = "lambda.lambda_handler"
     filename = data.archive_file.arch.output_path
   environment {

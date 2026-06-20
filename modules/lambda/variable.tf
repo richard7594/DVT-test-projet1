@@ -1,4 +1,4 @@
-variable "run_time" {
+variable "runtime" {
   type = string
 }
 
