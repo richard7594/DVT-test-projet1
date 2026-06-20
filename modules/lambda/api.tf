@@ -6,25 +6,25 @@ resource "aws_lambda_permission" "apigw" {
 }
 
 resource "aws_apigatewayv2_api" "lamda" {
-    name = "lambda-api"
-    protocol_type = "HTTP"   
+  name          = "lambda-api"
+  protocol_type = "HTTP"
 }
 
 resource "aws_apigatewayv2_integration" "itg" {
-   api_id = aws_apigatewayv2_api.lamda.id
-   integration_type = "AWS_PROXY"
-   integration_uri = aws_lambda_function.lambda.invoke_arn
+  api_id           = aws_apigatewayv2_api.lamda.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.lambda.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "rt" {
-    api_id = aws_apigatewayv2_api.lamda.id
-    route_key = "GET /note"  
-    target = "integrations/${aws_apigatewayv2_integration.itg.id}"
+  api_id    = aws_apigatewayv2_api.lamda.id
+  route_key = "GET /note"
+  target    = "integrations/${aws_apigatewayv2_integration.itg.id}"
 }
 
 resource "aws_apigatewayv2_stage" "dev" {
-  api_id = aws_apigatewayv2_api.lamda.id
-  name = "dev"
-  auto_deploy = true 
+  api_id      = aws_apigatewayv2_api.lamda.id
+  name        = "dev"
+  auto_deploy = true
 }
 

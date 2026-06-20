@@ -1,18 +1,18 @@
 locals {
   items_to_insert = {
-    "item1" = { Id = "1", tournoir = "world_cup", Nom = "richou",   Prenom = "varice" }
+    "item1" = { Id = "1", tournoir = "world_cup", Nom = "richou", Prenom = "varice" }
     "item2" = { Id = "2", tournoir = "world_cup", Nom = "richard", Prenom = "varice" }
-    "item3" = { Id = "1", tournoir = "LDC",       Nom = "richou",   Prenom = "varice" }
+    "item3" = { Id = "1", tournoir = "LDC", Nom = "richou", Prenom = "varice" }
   }
 }
 
 
 resource "aws_dynamodb_table" "dynamodb-table" {
-  name           = "Note"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "Id"
-  range_key = "tournoir"
-  
+  name         = "Note"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "Id"
+  range_key    = "tournoir"
+
 
   attribute {
     name = "Id"

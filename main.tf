@@ -1,12 +1,12 @@
 
 module "dynamoDB" {
-  source = "./modules/dynamoDB" 
+  source = "./modules/dynamoDB"
 }
 
 module "lambda" {
-  source = "./modules/lambda"
-  runtime = var.runtime  
-  depends_on = [ module.dynamoDB ]
+  source     = "./modules/lambda"
+  runtime    = var.runtime
+  depends_on = [module.dynamoDB]
 }
 
 output "api_url" {

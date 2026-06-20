@@ -1,2 +1,2 @@
-runtime  = "python3.10"
+runtime = "python3.10"
 
