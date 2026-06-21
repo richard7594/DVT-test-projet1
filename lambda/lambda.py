@@ -13,8 +13,8 @@ def lambda_handler(event, context):
       if event.get('httpMethod') == 'GET' :
         return get_item(event)
        
-      put_item(event)
-      return
+      return  put_item(event)
+    
     
     except Exception as e:
         print("ERROR:", str(e))
@@ -61,4 +61,7 @@ def put_item(event):
 
     )
 
-    return
+    return {
+       "statusCode" : 200,
+       "body": "Successful insertion"
+    }

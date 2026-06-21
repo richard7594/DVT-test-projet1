@@ -26,3 +26,4 @@ include/
 lib/
 lib/
 pyvenv.cfg
+post_cmd
