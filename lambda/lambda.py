@@ -11,8 +11,10 @@ def lambda_handler(event, context):
     try:
       
       if event.get('httpMethod') == 'GET' :
-        return get_item(event) 
-      
+        return get_item(event)
+       
+      put_item(event)
+      return
     
     except Exception as e:
         print("ERROR:", str(e))
@@ -41,11 +43,11 @@ def get_item (event):
 
 def put_item(event):
 
-    queryString = event.get('queryStringParameters', '')  
-    id = str(queryString.get('id', 1))
-    tournoir = str(queryString.get('tournoir', ''))
-    Nom = str(queryString.get('Nom', ''))
-    Prenom = str(queryString.get('Prenom', ''))
+    body = event.get('body', '')  
+    id = str(body.get('id', 1))
+    tournoir = str(body.get('tournoir', ''))
+    Nom = str(body.get('Nom', ''))
+    Prenom = str(body.get('Prenom', ''))
 
     responce = dynamodb.put_item(
 
