@@ -43,14 +43,14 @@ def get_item (event):
 
 def put_item(event):
 
-    body = event.get('body', '')  
-    id = str(body.get('id', 1))
+    body = json.loads(event.get('body', '')) 
+
+    id = str(body.get('id', ''))
     tournoir = str(body.get('tournoir', ''))
     Nom = str(body.get('Nom', ''))
     Prenom = str(body.get('Prenom', ''))
-    print(body,id,tournoir,Nom,Prenom)
-    responce = dynamodb.put_item(
 
+    responce = dynamodb.put_item(
       TableName = table_name,
       Item={
           'Id':{ 'N': id },
@@ -58,7 +58,6 @@ def put_item(event):
           'Nom':{ 'S': Nom },
           'Prenom':{ 'S': Prenom }
       }
-
     )
 
     return {
