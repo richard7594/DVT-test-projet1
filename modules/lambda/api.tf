@@ -16,7 +16,7 @@ resource "aws_apigatewayv2_route" "rt" {
   target    = "integrations/${aws_apigatewayv2_integration.itg.id}"
 }
 
-resource "aws_apigatewayv2_route" "rt" {
+resource "aws_apigatewayv2_route" "rt1" {
   api_id    = aws_apigatewayv2_api.lamda.id
   route_key = "POST /insert"
   target    = "integrations/${aws_apigatewayv2_integration.itg.id}"
