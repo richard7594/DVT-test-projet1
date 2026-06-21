@@ -48,7 +48,7 @@ def put_item(event):
     tournoir = str(body.get('tournoir', ''))
     Nom = str(body.get('Nom', ''))
     Prenom = str(body.get('Prenom', ''))
-
+    print(body,id,tournoir,Nom,Prenom)
     responce = dynamodb.put_item(
 
       TableName = table_name,
