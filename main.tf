@@ -9,6 +9,10 @@ module "lambda" {
   depends_on = [module.dynamoDB]
 }
 
-output "api_url" {
-  value = module.lambda.api_url
+output "GET_api_url" {
+  value = "curl ${module.lambda.api_url}/dev/note?id=2&tournoir=world_cup"
+}
+
+output "POST_api_url" {
+  value = "curl -X POST ${module.lambda.api_url}/dev/insert "
 }
